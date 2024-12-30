@@ -2,6 +2,7 @@ import { useSetRecoilState } from "recoil";
 import api from "../utils/api";
 import { tokenState } from "../recoils/tokenAtom";
 import { useMutation } from "@tanstack/react-query";
+import { IModalOpen, useModal } from "./useModal";
 
 export interface IAuth {
   email: string;
@@ -14,16 +15,24 @@ const fetchSignin = (authData: IAuth) => {
 };
 // 로그인 커스텀 훅
 export const useSigninMutation = () => {
-  const setAccessToken = useSetRecoilState(tokenState);
+  const { open, close } = useModal();
+
+  const setToken = useSetRecoilState(tokenState);
 
   return useMutation({
     mutationFn: fetchSignin,
     onSuccess: (response) => {
       const { token } = response.data;
-      setAccessToken(token);
+      setToken(token);
     },
     onError: (error) => {
-      console.log(error);
+      const errorMessage = error.message;
+      const modal: IModalOpen = {
+        title: errorMessage,
+        type: "alert",
+        callBack: close,
+      };
+      open(modal);
     },
   });
 };

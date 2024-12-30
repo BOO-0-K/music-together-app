@@ -18,9 +18,19 @@ export const Form = styled.form`
   gap: 10px;
 `;
 
+export const Input = styled.input`
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.inputColor};
+  font-size: 20px;
+  font-family: "Nanum Gothic", serif;
+`;
+
 export const Title = styled.h1`
   font-size: 22px;
   font-weight: 700;
+  color: white;
   margin-bottom: 10px;
 `;
 

@@ -10,7 +10,7 @@ const SFooter = styled.div`
 `;
 
 const CopyRightText = styled.span`
-  opacity: 0.5;
+  color: white;
 `;
 
 function Footer() {
