@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "./Button";
 import { useModal } from "../hooks/useModal";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 
-const Modal = styled.div`
+const Modal = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,20 +31,51 @@ const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
-function ConfirmModal() {
-  const { modal } = useModal();
+const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+`;
 
-  if (!modal.isOpen || modal.type !== "confirm") {
-    return null;
-  }
+const modalVariants = {
+  initial: {
+    opacity: 0,
+    scale: 0,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+  },
+  leaving: {
+    opacity: 0,
+  },
+};
+
+function ConfirmModal() {
+  const { modal, close } = useModal();
 
   return (
-    <Wrapper>
-      <Modal>
-        <Title>{modal?.title}</Title>
-        <Button text={"확인"} colorType={"POSITIVE"} onClick={modal.callBack} />
-      </Modal>
-    </Wrapper>
+    <AnimatePresence>
+      {modal.isOpen && modal.type === "confirm" ? (
+        <Wrapper>
+          <Modal
+            variants={modalVariants}
+            initial="initial"
+            animate="visible"
+            exit="leaving"
+          >
+            <Title>{modal?.title}</Title>
+            <ButtonWrapper>
+              <Button text={"취소"} colorType={"NEGATIVE"} onClick={close} />
+              <Button
+                text={"확인"}
+                colorType={"POSITIVE"}
+                onClick={modal.callBack}
+              />
+            </ButtonWrapper>
+          </Modal>
+        </Wrapper>
+      ) : null}
+    </AnimatePresence>
   );
 }
 

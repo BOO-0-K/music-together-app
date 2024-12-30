@@ -7,8 +7,8 @@ import Login from "./routes/Login";
 import Join from "./routes/Join";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ConfirmModal from "./components/ConfirmModal";
-import AlertModal from "./components/AlertModal";
+import ConfirmModal from "./components/AlertModal";
+import AlertModal from "./components/ConfirmModal";
 
 const router = createBrowserRouter(
   [

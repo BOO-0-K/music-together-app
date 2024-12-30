@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-weight: 300;
     font-family: 'Nanum Gothic', serif;
-    background-color: ${(props) => props.theme.bgColor};
+    background: linear-gradient(135deg,#acb6e5,#86fde8);
     color: black;
     line-height: 1.2;
   }
